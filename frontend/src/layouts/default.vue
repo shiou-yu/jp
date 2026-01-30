@@ -1,9 +1,26 @@
 <template>
   <v-app>
-    <v-app-bar color="white" elevation="0" style="border-bottom: 1px solid #ECEFF1; z-index: 1000;">
-      <v-container class="d-flex align-center">
-        <v-app-bar-title class="font-weight-bold text-blue-grey-darken-3" style="letter-spacing: 2px;">
-          日本超商挖到寶 <small style="font-size: 0.5em; opacity: 0.6; letter-spacing: 1px;">JAPAN CVS PICKS</small>
+    <v-app-bar
+      :color="scrolled ? 'white' : 'transparent'"
+      :elevation="scrolled ? 2 : 0"
+      fixed
+      flat
+      height="80"
+      :style="appBarStyle"
+    >
+      <v-container class="d-flex align-center px-0">
+        <v-app-bar-title
+          class="font-weight-bold transition-all"
+          :class="scrolled ? 'text-blue-grey-darken-3' : 'text-white'"
+          style="letter-spacing: 2px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);"
+        >
+          日本超商挖到寶
+          <small
+            :class="scrolled ? 'text-blue-grey' : 'text-white'"
+            style="font-size: 0.5em; opacity: 0.9; letter-spacing: 1px;"
+          >
+            JAPAN CVS PICKS
+          </small>
         </v-app-bar-title>
 
         <v-spacer></v-spacer>
@@ -11,7 +28,10 @@
         <template v-for="nav in navs" :key="nav.to">
           <v-btn
             v-if="nav.show"
-            class="text-blue-grey-darken-3 font-weight-bold"
+            class="font-weight-bold transition-all nav-btn"
+            :class="scrolled ? 'text-blue-grey-darken-3' : 'text-white'"
+            flat
+            :ripple="false"
             :to="nav.to"
             variant="text"
           >
@@ -29,8 +49,11 @@
 
         <v-btn
           v-if="user.isLoggedIn"
-          class="text-blue-grey-darken-3 font-weight-bold"
+          class="font-weight-bold transition-all nav-btn"
+          :class="scrolled ? 'text-blue-grey-darken-3' : 'text-white'"
+          flat
           prepend-icon="mdi-hand-wave-outline"
+          :ripple="false"
           variant="text"
           @click="logout"
         >
@@ -39,7 +62,7 @@
       </v-container>
     </v-app-bar>
 
-    <v-main style="background-color: #FFF9F0;">
+    <v-main style="padding-top: 0 !important; background-color: #FFF9F0;">
       <router-view></router-view>
     </v-main>
 
@@ -54,7 +77,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSnackbar } from 'vuetify-use-dialog'
 import serviceUser from '@/services/user'
@@ -63,6 +86,27 @@ import { useUserStore } from '@/stores/user'
 const router = useRouter()
 const user = useUserStore()
 const createSnackbar = useSnackbar()
+
+// 滾動狀態
+const scrolled = ref(false)
+
+const handleScroll = () => {
+  scrolled.value = window.scrollY > 50
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll, { passive: true })
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
+
+// 導覽列樣式
+const appBarStyle = computed(() => ({
+  transition: 'all 0.3s ease',
+  border: 'none !important',
+}))
 
 // --- 導覽列設定 ---
 const navs = computed(() => [
@@ -95,5 +139,71 @@ html, body, #app, .v-application {
 }
 a, button, .v-btn, i, .v-list-item {
   cursor: none !important;
+}
+
+/* 平滑過渡 */
+.transition-all {
+  transition: all 0.3s ease !important;
+}
+
+/* 導覽列按鈕文字陰影 */
+.nav-btn:not(.scrolled) {
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+/* 移除按鈕的背景、hover、active 效果 */
+.nav-btn {
+  background: none !important;
+}
+
+.nav-btn::before,
+.nav-btn::after {
+  display: none !important;
+}
+
+.nav-btn:hover,
+.nav-btn:focus,
+.nav-btn:active {
+  background: none !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.nav-btn .v-btn__overlay {
+  display: none !important;
+}
+
+/* 完全移除 v-app-bar 的背景和邊框 */
+.v-app-bar {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.v-app-bar::before,
+.v-app-bar::after {
+  display: none !important;
+}
+
+/* 當沒有滾動時，完全透明 */
+.v-app-bar.v-app-bar--transparent {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* 移除 toolbar 的邊框和線條 */
+.v-toolbar {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.v-toolbar__content {
+  border: none !important;
+}
+
+/* 移除所有可能的邊框線 */
+.v-app-bar--border {
+  border: none !important;
 }
 </style>

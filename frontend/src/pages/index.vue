@@ -1,24 +1,51 @@
 <template>
-  <v-container class="py-10">
-    <v-row class="mb-6">
-      <v-col cols="12">
-        <v-carousel
-          class="rounded-xl elevation-3"
-          cycle
-          :height="carouselHeight"
-          hide-delimiter-background
-          show-arrows="hover"
-        >
-          <v-carousel-item
-            v-for="(slide, i) in slides"
-            :key="i"
-            cover
-            :src="slide.src"
-          ></v-carousel-item>
-        </v-carousel>
-      </v-col>
-    </v-row>
+  <!-- 滿版輪播區 -->
+  <v-carousel
+    class="fullscreen-carousel"
+    cycle
+    height="100vh"
+    hide-delimiters
+    :interval="5000"
+    show-arrows="hover"
+  >
+    <v-carousel-item
+      v-for="(slide, i) in slides"
+      :key="i"
+      cover
+      :src="slide.src"
+    >
+      <!-- 深色遮罩層 -->
+      <div class="carousel-overlay"></div>
 
+      <!-- 文字覆蓋層 -->
+      <v-container class="carousel-content fill-height">
+        <v-row align="center" justify="center">
+          <v-col class="text-center" cols="12">
+            <h1 class="text-h2 text-white font-weight-bold mb-4" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.5)">
+              {{ slide.title }}
+            </h1>
+            <p class="text-h5 text-white mb-8" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.5)">
+              {{ slide.subtitle }}
+            </p>
+            <v-btn
+              class="px-8"
+              color="white"
+              rounded="pill"
+              size="x-large"
+              variant="flat"
+              @click="scrollToProducts"
+            >
+              <v-icon start>mdi-compass</v-icon>
+              立即探索
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-carousel-item>
+  </v-carousel>
+
+  <!-- 商品區域 -->
+  <v-container ref="productsSection" class="py-10">
     <v-row class="mb-6">
       <v-col cols="12">
         <h1 class="text-h4 font-weight-bold text-blue-grey-darken-3">
@@ -115,21 +142,48 @@ const { mobile } = useDisplay()
 const createSnackbar = useSnackbar()
 const products = ref([])
 const loading = ref(true)
+const productsSection = ref(null)
 
-// 輪播圖高度響應式
-const carouselHeight = computed(() => (mobile.value ? 250 : 400))
-
+// 滿版輪播內容
 const slides = ref([
-  { src: '/banner-01.jpg' },
-  { src: '/banner-02.jpg' },
-  { src: '/banner-03.jpg' },
-  { src: '/banner-04.png' },
-  { src: '/banner-05.jpg' },
+  {
+    src: '/banner-01.jpg',
+    title: '日本超商挖到寶',
+    subtitle: '發現你的日常小確幸',
+  },
+  {
+    src: '/banner-02.jpg',
+    title: '限定美味登場',
+    subtitle: '每一口都是驚喜',
+  },
+  {
+    src: '/banner-03.jpg',
+    title: '人氣必吃推薦',
+    subtitle: '台灣也能嚐到的日本味',
+  },
+  {
+    src: '/banner-04.png',
+    title: '季節限定特選',
+    subtitle: '不容錯過的絕品好物',
+  },
+  {
+    src: '/banner-05.jpg',
+    title: '超商美食指南',
+    subtitle: '品味日本的便利生活',
+  },
 ])
 
 const search = ref('')
 const category = ref('全部')
 const store = ref(null)
+
+// 平滑滾動到商品區
+const scrollToProducts = () => {
+  productsSection.value?.$el.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start',
+  })
+}
 
 // API 請求
 const fetchProducts = async () => {
@@ -153,13 +207,13 @@ const fetchProducts = async () => {
   }
 }
 
-// 搜尋防抖處理 (避免每打一個字就發一次請求)
+// 搜尋防抖處理
 let timer
 const onSearchInput = () => {
   clearTimeout(timer)
   timer = setTimeout(() => {
     fetchProducts()
-  }, 500) // 停頓 0.5 秒後才發送請求
+  }, 500)
 }
 
 const onClearSearch = () => {
@@ -171,17 +225,68 @@ onMounted(fetchProducts)
 </script>
 
 <style scoped>
+/* 滿版輪播 */
+.fullscreen-carousel {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  position: relative;
+}
+
+/* 深色遮罩 */
+.carousel-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  z-index: 1;
+}
+
+/* 文字內容層 */
+.carousel-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+/* 響應式標題 */
+@media (max-width: 960px) {
+  .carousel-content .text-h2 {
+    font-size: 2rem !important;
+  }
+  .carousel-content .text-h5 {
+    font-size: 1.2rem !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .carousel-content .text-h2 {
+    font-size: 1.5rem !important;
+  }
+  .carousel-content .text-h5 {
+    font-size: 1rem !important;
+  }
+}
+
+/* 商品區域 */
 .v-container {
-  /* 背景色建議留在 layout，這裡只負責結構 */
   min-height: 100vh;
 }
 
-/* 虛線外框樣式 */
+/* 虛線外框 */
 .border-dashed-custom {
   border: 2px dashed #cfd8dc !important;
 }
 
-/* 所有的 Chip 懸停動畫 */
+/* Chip 動畫 */
 :deep(.v-chip) {
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out !important;
   cursor: pointer;
@@ -192,5 +297,13 @@ onMounted(fetchProducts)
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-/* 修正：Vuetify 預設字體將會生效，因為此處無 font-family 設定 */
+/* 按鈕動畫 */
+.v-btn {
+  transition: all 0.3s ease;
+}
+
+.v-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
 </style>
