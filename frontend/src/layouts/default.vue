@@ -25,42 +25,101 @@
 
         <v-spacer></v-spacer>
 
-        <template v-for="nav in navs" :key="nav.to">
+        <!-- 桌面版選單 -->
+        <div class="d-none d-md-flex align-center">
+          <template v-for="nav in navs" :key="nav.to">
+            <v-btn
+              v-if="nav.show"
+              class="font-weight-bold transition-all nav-btn"
+              :class="scrolled ? 'text-blue-grey-darken-3' : 'text-white'"
+              flat
+              :ripple="false"
+              :to="nav.to"
+              variant="text"
+            >
+              <v-icon :icon="nav.icon" start></v-icon>
+              {{ nav.title }}
+
+              <v-badge
+                v-if="(nav.to === '/cart' || nav.to === '/favorites') && user.cart > 0"
+                color="red-lighten-1"
+                :content="user.cart"
+                floating
+              ></v-badge>
+            </v-btn>
+          </template>
+
           <v-btn
-            v-if="nav.show"
+            v-if="user.isLoggedIn"
             class="font-weight-bold transition-all nav-btn"
             :class="scrolled ? 'text-blue-grey-darken-3' : 'text-white'"
             flat
+            prepend-icon="mdi-hand-wave-outline"
             :ripple="false"
-            :to="nav.to"
             variant="text"
+            @click="logout"
           >
-            <v-icon :icon="nav.icon" start></v-icon>
-            {{ nav.title }}
-
-            <v-badge
-              v-if="(nav.to === '/cart' || nav.to === '/favorites') && user.cart > 0"
-              color="red-lighten-1"
-              :content="user.cart"
-              floating
-            ></v-badge>
+            登出
           </v-btn>
-        </template>
+        </div>
 
+        <!-- 手機版漢堡選單按鈕 -->
         <v-btn
-          v-if="user.isLoggedIn"
-          class="font-weight-bold transition-all nav-btn"
+          class="d-md-none nav-btn"
           :class="scrolled ? 'text-blue-grey-darken-3' : 'text-white'"
           flat
-          prepend-icon="mdi-hand-wave-outline"
+          icon
           :ripple="false"
           variant="text"
-          @click="logout"
+          @click="drawer = !drawer"
         >
-          登出
+          <v-icon>mdi-menu</v-icon>
         </v-btn>
       </v-container>
     </v-app-bar>
+
+    <!-- 側邊抽屜選單 -->
+    <v-navigation-drawer
+      v-model="drawer"
+      location="right"
+      temporary
+      width="280"
+    >
+      <v-list class="pt-4">
+        <v-list-item
+          prepend-icon="mdi-close"
+          title="關閉選單"
+          @click="drawer = false"
+        ></v-list-item>
+
+        <v-divider class="my-2"></v-divider>
+
+        <template v-for="nav in navs" :key="nav.to">
+          <v-list-item
+            v-if="nav.show"
+            :prepend-icon="nav.icon"
+            :title="nav.title"
+            :to="nav.to"
+            @click="drawer = false"
+          >
+            <template v-if="(nav.to === '/cart' || nav.to === '/favorites') && user.cart > 0" #append>
+              <v-badge
+                color="red-lighten-1"
+                :content="user.cart"
+                inline
+              ></v-badge>
+            </template>
+          </v-list-item>
+        </template>
+
+        <v-list-item
+          v-if="user.isLoggedIn"
+          prepend-icon="mdi-hand-wave-outline"
+          title="登出"
+          @click="logout"
+        ></v-list-item>
+      </v-list>
+    </v-navigation-drawer>
 
     <v-main style="padding-top: 0 !important; background-color: #FFF9F0;">
       <router-view></router-view>
@@ -86,6 +145,9 @@ import { useUserStore } from '@/stores/user'
 const router = useRouter()
 const user = useUserStore()
 const createSnackbar = useSnackbar()
+
+// 抽屜選單狀態
+const drawer = ref(false)
 
 // 滾動狀態
 const scrolled = ref(false)
@@ -124,6 +186,7 @@ const logout = async () => {
     console.log(error)
   }
   user.logout()
+  drawer.value = false // 關閉抽屜
   router.push('/')
   createSnackbar({
     text: '登出成功',
