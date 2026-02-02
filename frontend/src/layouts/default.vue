@@ -1,26 +1,17 @@
 <template>
   <v-app>
     <v-app-bar
-      :color="scrolled ? 'white' : 'transparent'"
-      :elevation="scrolled ? 2 : 0"
+      :class="['app-bar-custom', { 'scrolled': scrolled }]"
       fixed
       flat
       height="80"
-      :style="appBarStyle"
     >
       <v-container class="d-flex align-center px-0">
         <v-app-bar-title
-          class="font-weight-bold transition-all"
-          :class="scrolled ? 'text-blue-grey-darken-3' : 'text-white'"
-          style="letter-spacing: 2px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);"
+          class="font-weight-bold transition-all logo-title"
+          :class="scrolled ? 'text-grey-darken-4' : 'text-white'"
         >
-          日本超商挖到寶
-          <small
-            :class="scrolled ? 'text-blue-grey' : 'text-white'"
-            style="font-size: 0.5em; opacity: 0.9; letter-spacing: 1px;"
-          >
-            JAPAN CVS PICKS
-          </small>
+          JAPAN CVS PICKS
         </v-app-bar-title>
 
         <v-spacer></v-spacer>
@@ -30,18 +21,18 @@
           <template v-for="nav in navs" :key="nav.to">
             <v-btn
               v-if="nav.show"
-              class="font-weight-bold transition-all nav-btn"
+              class="font-weight-bold transition-all nav-btn mx-1"
               :class="scrolled ? 'text-blue-grey-darken-3' : 'text-white'"
               flat
               :ripple="false"
+              style="font-size: 1.1rem; letter-spacing: 1px;"
               :to="nav.to"
               variant="text"
             >
-              <v-icon :icon="nav.icon" start></v-icon>
               {{ nav.title }}
 
               <v-badge
-                v-if="(nav.to === '/cart' || nav.to === '/favorites') && user.cart > 0"
+                v-if="(nav.to === '/favorites') && user.cart > 0"
                 color="red-lighten-1"
                 :content="user.cart"
                 floating
@@ -51,15 +42,15 @@
 
           <v-btn
             v-if="user.isLoggedIn"
-            class="font-weight-bold transition-all nav-btn"
+            class="font-weight-bold transition-all nav-btn mx-1"
             :class="scrolled ? 'text-blue-grey-darken-3' : 'text-white'"
             flat
-            prepend-icon="mdi-hand-wave-outline"
             :ripple="false"
+            style="font-size: 1.1rem; letter-spacing: 1px;"
             variant="text"
             @click="logout"
           >
-            登出
+            LOGOUT
           </v-btn>
         </div>
 
@@ -87,8 +78,8 @@
     >
       <v-list class="pt-4">
         <v-list-item
-          prepend-icon="mdi-close"
-          title="關閉選單"
+          class="text-h6 font-weight-bold mb-2"
+          title="✕ CLOSE"
           @click="drawer = false"
         ></v-list-item>
 
@@ -97,12 +88,12 @@
         <template v-for="nav in navs" :key="nav.to">
           <v-list-item
             v-if="nav.show"
-            :prepend-icon="nav.icon"
+            class="text-h6 font-weight-medium my-1"
             :title="nav.title"
             :to="nav.to"
             @click="drawer = false"
           >
-            <template v-if="(nav.to === '/cart' || nav.to === '/favorites') && user.cart > 0" #append>
+            <template v-if="nav.to === '/favorites' && user.cart > 0" #append>
               <v-badge
                 color="red-lighten-1"
                 :content="user.cart"
@@ -114,8 +105,8 @@
 
         <v-list-item
           v-if="user.isLoggedIn"
-          prepend-icon="mdi-hand-wave-outline"
-          title="登出"
+          class="text-h6 font-weight-medium my-1"
+          title="LOGOUT"
           @click="logout"
         ></v-list-item>
       </v-list>
@@ -164,19 +155,13 @@ onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 
-// 導覽列樣式
-const appBarStyle = computed(() => ({
-  transition: 'all 0.3s ease',
-  border: 'none !important',
-}))
-
 // --- 導覽列設定 ---
 const navs = computed(() => [
-  { title: '首頁', to: '/', icon: 'mdi-compass-outline', show: true },
-  { title: '註冊', to: '/register', icon: 'mdi-pencil-outline', show: !user.isLoggedIn },
-  { title: '登入', to: '/login', icon: 'mdi-key-outline', show: !user.isLoggedIn },
-  { title: '收藏清單', to: '/favorites', icon: 'mdi-heart', show: user.isLoggedIn },
-  { title: '管理', to: '/admin', icon: 'mdi-clipboard-text-outline', show: user.isLoggedIn && user.isAdmin },
+  { title: 'HOME', to: '/', show: true },
+  { title: 'REGISTER', to: '/register', show: !user.isLoggedIn },
+  { title: 'LOGIN', to: '/login', show: !user.isLoggedIn },
+  { title: 'FAVORITES', to: '/favorites', show: user.isLoggedIn },
+  { title: 'ADMIN', to: '/admin', show: user.isLoggedIn && user.isAdmin },
 ])
 
 const logout = async () => {
@@ -186,7 +171,7 @@ const logout = async () => {
     console.log(error)
   }
   user.logout()
-  drawer.value = false // 關閉抽屜
+  drawer.value = false
   router.push('/')
   createSnackbar({
     text: '登出成功',
@@ -209,6 +194,43 @@ a, button, .v-btn, i, .v-list-item {
   transition: all 0.3s ease !important;
 }
 
+/* ✨ 導覽列霧透效果 */
+.app-bar-custom {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* 滾動後的霧透玻璃效果 */
+.app-bar-custom.scrolled {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Logo 標題 - 漸層金色 */
+.logo-title {
+  font-size: 1.8rem !important;
+  letter-spacing: 4px;
+  font-weight: 700 !important;
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 10px rgba(255, 215, 0, 0.3));
+}
+
+/* 滾動後改回深色 */
+.logo-title.text-grey-darken-4 {
+  background: linear-gradient(135deg, #DAA520 0%, #B8860B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: none;
+}
+
 /* 導覽列按鈕文字陰影 */
 .nav-btn:not(.scrolled) {
   text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
@@ -217,11 +239,15 @@ a, button, .v-btn, i, .v-list-item {
 /* 移除按鈕的背景、hover、active 效果 */
 .nav-btn {
   background: none !important;
+  position: relative;
 }
 
-.nav-btn::before,
-.nav-btn::after {
+.nav-btn .v-btn__overlay {
   display: none !important;
+}
+
+.nav-btn .v-btn__content {
+  position: relative;
 }
 
 .nav-btn:hover,
@@ -232,30 +258,36 @@ a, button, .v-btn, i, .v-list-item {
   box-shadow: none !important;
 }
 
-.nav-btn .v-btn__overlay {
-  display: none !important;
+/* 底線動畫 - 從左到右滑入 */
+.nav-btn .v-btn__content::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background-color: currentColor;
+  transition: width 0.3s ease;
 }
 
-/* 完全移除 v-app-bar 的背景和邊框 */
-.v-app-bar {
-  background: none !important;
-  border: none !important;
-  box-shadow: none !important;
+/* hover 時底線從左滑出 */
+.nav-btn:hover .v-btn__content::after {
+  width: 100%;
 }
 
+/* active/當前頁面時底線保持 */
+.nav-btn.v-btn--active .v-btn__content::after,
+.router-link-active.nav-btn .v-btn__content::after,
+.router-link-exact-active.nav-btn .v-btn__content::after {
+  width: 100%;
+}
+
+/* 移除 Vuetify 預設樣式 */
 .v-app-bar::before,
 .v-app-bar::after {
   display: none !important;
 }
 
-/* 當沒有滾動時，完全透明 */
-.v-app-bar.v-app-bar--transparent {
-  background-color: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-/* 移除 toolbar 的邊框和線條 */
 .v-toolbar {
   border: none !important;
   box-shadow: none !important;
@@ -265,7 +297,6 @@ a, button, .v-btn, i, .v-list-item {
   border: none !important;
 }
 
-/* 移除所有可能的邊框線 */
 .v-app-bar--border {
   border: none !important;
 }

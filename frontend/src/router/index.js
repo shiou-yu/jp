@@ -8,7 +8,6 @@ import { setupLayouts } from 'virtual:generated-layouts'
 // Composables
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { routes } from 'vue-router/auto-routes'
-import serviceUser from '@/services/user'
 import { useUserStore } from '@/stores/user'
 
 const router = createRouter({
@@ -19,17 +18,7 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const user = useUserStore()
 
-  // 如果有 token 就取得檢查使用者資料
-  if (user.isLoggedIn) {
-    try {
-      const { data } = await serviceUser.profile()
-      user.login(data.result)
-    } catch (error) {
-      console.log(error)
-      user.logout()
-    }
-  }
-
+  // 移除異步 API 請求，直接使用已載入的用戶資料
   // 根據登入狀態和權限判斷能不能去目標頁面
   if (to.meta.login === 'no-login-only' && user.isLoggedIn) {
     // 去未登入限定頁面，且使用者有登入，回首頁
