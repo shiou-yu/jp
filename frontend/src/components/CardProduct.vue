@@ -1,6 +1,6 @@
 <template>
   <v-card
-    class="h-100 d-flex flex-column cursor-pointer hover-card bg-white rounded-xl"
+    class="h-100 d-flex flex-column cursor-pointer hover-card bg-white"
     elevation="2"
     @click="goToProduct"
   >
@@ -156,14 +156,19 @@ const addFavorite = async () => {
   font-size: 0.9rem;
 }
 
-/* 卡片樣式 */
+/* 卡片樣式 - 漸層邊框 + 16px 圓角 */
 .hover-card {
   position: relative;
   overflow: hidden;
   transition: all 0.4s ease;
+  border-radius: 16px;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(white, white) padding-box,
+    linear-gradient(135deg, rgba(255, 193, 7, 0.3), rgba(233, 30, 99, 0.3)) border-box;
 }
 
-/* 🌈 Hover 漸層遮罩 - 仿照 busybeehoney 效果 */
+/* 🌈 Hover 漸層遮罩 */
 .hover-overlay {
   position: absolute;
   bottom: 0;
@@ -172,9 +177,9 @@ const addFavorite = async () => {
   height: 0;
   background: linear-gradient(
     to top,
-    rgba(255, 193, 7, 0.12) 0%,      /* 黃色 - 從 0.25 降到 0.12 */
-    rgba(255, 152, 0, 0.10) 40%,     /* 橘色 - 從 0.2 降到 0.10 */
-    rgba(233, 30, 99, 0.08) 60%,     /* 粉色 - 從 0.15 降到 0.08 */
+    rgba(255, 193, 7, 0.12) 0%,
+    rgba(255, 152, 0, 0.10) 40%,
+    rgba(233, 30, 99, 0.08) 60%,
     transparent 100%
   );
   z-index: 1;
@@ -186,7 +191,10 @@ const addFavorite = async () => {
 @media (min-width: 600px) {
   .hover-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08) !important;  /* 從 0.15 降到 0.08 */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08) !important;
+    background:
+      linear-gradient(white, white) padding-box,
+      linear-gradient(135deg, rgba(255, 193, 7, 0.6), rgba(233, 30, 99, 0.6)) border-box;
   }
 
   .hover-card:hover .hover-overlay {
