@@ -172,9 +172,9 @@ const addFavorite = async () => {
   height: 0;
   background: linear-gradient(
     to top,
-    rgba(255, 193, 7, 0.25) 0%,      /* 黃色 */
-    rgba(255, 152, 0, 0.2) 30%,      /* 橘色 */
-    rgba(233, 30, 99, 0.15) 60%,     /* 粉色 */
+    rgba(255, 193, 7, 0.12) 0%,      /* 黃色 - 從 0.25 降到 0.12 */
+    rgba(255, 152, 0, 0.10) 40%,     /* 橘色 - 從 0.2 降到 0.10 */
+    rgba(233, 30, 99, 0.08) 60%,     /* 粉色 - 從 0.15 降到 0.08 */
     transparent 100%
   );
   z-index: 1;
@@ -186,7 +186,7 @@ const addFavorite = async () => {
 @media (min-width: 600px) {
   .hover-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.15) !important;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08) !important;  /* 從 0.15 降到 0.08 */
   }
 
   .hover-card:hover .hover-overlay {
