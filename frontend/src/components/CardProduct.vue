@@ -4,6 +4,9 @@
     elevation="2"
     @click="goToProduct"
   >
+    <!-- 👇 只保留 Hover 波紋效果 -->
+    <div class="hover-overlay"></div>
+
     <v-img
       class="align-end text-white product-image"
       cover
@@ -55,7 +58,7 @@
     <v-card-actions class="pt-0">
       <v-spacer></v-spacer>
       <v-btn
-        color="pink-lighten-3"
+        class="favorite-heart-btn"
         icon="mdi-heart"
         variant="text"
         @click.stop="addFavorite"
@@ -81,7 +84,6 @@ const props = defineProps({
   name: { type: String, required: true },
   category: { type: String, default: '' },
   price: { type: Number, required: true },
-  // 新增接收後端的日圓虛擬欄位
   priceJP: { type: String, default: '' },
   description: { type: String, default: '' },
   rating: { type: Number, default: 0 },
@@ -95,9 +97,7 @@ const imageUrl = computed(() => {
   return `https://res.cloudinary.com/${cloudName}/image/upload/${props.image}`
 })
 
-// 修改：不再使用 TWD 格式化，改用後端算好的 priceJP
 const formatedPrice = computed(() => {
-  // 優先使用後端傳來的 "￥320"，若還沒抓到則用 props.price 加上符號兜底
   return props.priceJP || `￥${props.price}`
 })
 
@@ -119,7 +119,7 @@ const addFavorite = async () => {
     user.cart = data.result
     createSnackbar({
       text: '已加入收藏清單 ❤️',
-      snackbarProps: { color: 'pink-darken-1', timeout: 2000 },
+      snackbarProps: { color: 'pink', timeout: 2000 },
     })
   } catch (error) {
     const text = error?.response?.data?.message || '發生錯誤'
@@ -132,6 +132,7 @@ const addFavorite = async () => {
 /* 預設圖片高度 */
 .product-image {
   height: 200px;
+  transition: transform 0.5s ease;
 }
 
 /* 標題文字優化 */
@@ -139,6 +140,7 @@ const addFavorite = async () => {
   font-size: 1.1rem;
   line-height: 1.4;
   white-space: normal;
+  transition: color 0.3s ease;
 }
 
 /* 商品描述文字截斷處理 */
@@ -154,14 +156,93 @@ const addFavorite = async () => {
   font-size: 0.9rem;
 }
 
+/* 卡片樣式 */
 .hover-card {
-  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
 }
 
+/* 🌈 Hover 漸層遮罩 - 仿照 busybeehoney 效果 */
+.hover-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(
+    to top,
+    rgba(255, 193, 7, 0.25) 0%,      /* 黃色 */
+    rgba(255, 152, 0, 0.2) 30%,      /* 橘色 */
+    rgba(233, 30, 99, 0.15) 60%,     /* 粉色 */
+    transparent 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+  transition: height 0.5s ease;
+}
+
+/* Hover 效果 */
 @media (min-width: 600px) {
   .hover-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15) !important;
+  }
+
+  .hover-card:hover .hover-overlay {
+    height: 100%;
+  }
+
+  .hover-card:hover .product-image {
+    transform: scale(1.1);
+  }
+
+  .hover-card:hover .product-title {
+    color: #FF9800;
+  }
+}
+
+/* ❤️ 愛心按鈕樣式與動畫 */
+.favorite-heart-btn {
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+.favorite-heart-btn :deep(.v-icon) {
+  color: #E91E63 !important;
+  font-size: 24px;
+}
+
+.favorite-heart-btn:hover {
+  transform: scale(1.2);
+  animation: heartbeat 1s ease-in-out infinite;
+}
+
+.favorite-heart-btn:hover :deep(.v-icon) {
+  color: #F06292 !important;
+}
+
+.favorite-heart-btn:active {
+  transform: scale(0.9);
+  animation: none;
+}
+
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1.2);
+  }
+  14% {
+    transform: scale(1.35);
+  }
+  28% {
+    transform: scale(1.2);
+  }
+  42% {
+    transform: scale(1.35);
+  }
+  56% {
+    transform: scale(1.2);
   }
 }
 
