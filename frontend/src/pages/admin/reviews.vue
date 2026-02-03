@@ -20,8 +20,8 @@
                   v-model="search"
                   clearable
                   color="orange-darken-2"
-                  hide-details
                   density="comfortable"
+                  hide-details
                   label="搜尋評論內容"
                   prepend-inner-icon="mdi-magnify"
                   rounded="lg"
@@ -33,8 +33,8 @@
                   v-model="filterRating"
                   clearable
                   color="orange-darken-2"
-                  hide-details
                   density="comfortable"
+                  hide-details
                   :items="ratingOptions"
                   label="評分篩選"
                   rounded="lg"
@@ -46,8 +46,8 @@
                   v-model="filterStatus"
                   clearable
                   color="orange-darken-2"
-                  hide-details
                   density="comfortable"
+                  hide-details
                   :items="statusOptions"
                   label="狀態篩選"
                   rounded="lg"
@@ -130,7 +130,7 @@
             <template #item.user="{ item }">
               <div class="d-flex align-center">
                 <v-avatar class="mr-2" size="32">
-                  <v-img :src="`https://api.dicebear.com/9.x/thumbs/svg?seed=${item.user}`"></v-img>
+                  <v-img :src="`https://source.boringavatars.com/beam/120/${item.user}?colors=FF9800,F57C00,E65100,FFB74D,FFA726`"></v-img>
                 </v-avatar>
                 <span class="font-weight-medium">{{ item.user }}</span>
               </div>

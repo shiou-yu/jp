@@ -14,7 +14,7 @@
             class="user-avatar"
             size="80"
           >
-            <v-img :src="`https://api.dicebear.com/9.x/thumbs/svg?seed=${user.account}`"></v-img>
+            <v-img :src="`https://api.dicebear.com/9.x/fun-emoji/svg?seed=${user.account}`"></v-img>
           </v-avatar>
         </div>
         <h3 class="text-h6 font-weight-bold mt-3 text-white">{{ user.account }}</h3>
