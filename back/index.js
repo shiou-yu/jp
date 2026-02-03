@@ -6,6 +6,7 @@ import cors from 'cors'
 import routeUser from './routes/user.js'
 import routeProduct from './routes/product.js'
 import routeOrder from './routes/order.js'
+import routeReview from './routes/review.js' // 👈 加這行
 import './passport/passport.js'
 
 mongoose
@@ -32,6 +33,7 @@ app.use((error, req, res, _next) => {
 app.use('/user', routeUser)
 app.use('/product', routeProduct)
 app.use('/order', routeOrder)
+app.use('/review', routeReview) // 👈 加這行
 
 app.listen(process.env.PORT || 4000, () => {
   console.log('伺服器啟動 http://localhost:4000')
