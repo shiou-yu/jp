@@ -6,12 +6,12 @@
 
 import { setupLayouts } from 'virtual:generated-layouts'
 // Composables
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'  // 👈 改這裡
 import { routes } from 'vue-router/auto-routes'
 import { useUserStore } from '@/stores/user'
 
 const router = createRouter({
-  history: createWebHashHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),  // 👈 改這裡
   routes: setupLayouts(routes),
 })
 
@@ -24,7 +24,7 @@ router.beforeEach(async (to, from, next) => {
     // 去未登入限定頁面，且使用者有登入，回首頁
     next('/')
   } else if (to.meta.login === 'login-only' && !user.isLoggedIn) {
-    // 去登入限定頁面，且使用者沒有登入，回登入頁面
+    // 去登入限定頁面,且使用者沒有登入，回登入頁面
     next('/login')
   } else if (to.meta.admin && !user.isAdmin) {
     // 去管理員限定頁面，且使用者不是管理員，回首頁

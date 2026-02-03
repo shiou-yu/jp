@@ -1,11 +1,11 @@
 <template>
   <v-container class="admin-home-container" fluid>
-    <v-row align="center" justify="center" class="fill-height">
-      <v-col cols="12" md="10" lg="8">
+    <v-row align="center" class="fill-height" justify="center">
+      <v-col cols="12" lg="8" md="10">
         <!-- 歡迎卡片 -->
         <v-card class="welcome-card" elevation="8">
           <div class="welcome-header">
-            <v-icon size="80" color="white">mdi-shield-crown</v-icon>
+            <v-icon color="white" size="80">mdi-shield-crown</v-icon>
             <h1 class="text-h3 font-weight-bold text-white mt-4">管理中心</h1>
             <p class="text-subtitle-1 text-white mt-2 opacity-90">超商美食評論後台管理系統</p>
           </div>
@@ -17,7 +17,7 @@
 
             <!-- 快捷功能卡片 -->
             <v-row>
-              <v-col cols="12" sm="6" md="4">
+              <v-col cols="12" md="4" sm="6">
                 <v-card
                   class="feature-card"
                   elevation="2"
@@ -26,7 +26,7 @@
                 >
                   <v-card-text class="text-center pa-6">
                     <div class="feature-icon-wrapper mb-4">
-                      <v-icon size="48" color="orange-darken-2">mdi-food</v-icon>
+                      <v-icon color="orange-darken-2" size="48">mdi-food</v-icon>
                     </div>
                     <h3 class="text-h6 font-weight-bold mb-2">商品管理</h3>
                     <p class="text-body-2 text-grey">新增、編輯、刪除商品資訊</p>
@@ -34,7 +34,7 @@
                 </v-card>
               </v-col>
 
-              <v-col cols="12" sm="6" md="4">
+              <v-col cols="12" md="4" sm="6">
                 <v-card
                   class="feature-card"
                   elevation="2"
@@ -43,7 +43,7 @@
                 >
                   <v-card-text class="text-center pa-6">
                     <div class="feature-icon-wrapper mb-4">
-                      <v-icon size="48" color="blue-darken-2">mdi-clipboard-list</v-icon>
+                      <v-icon color="blue-darken-2" size="48">mdi-clipboard-list</v-icon>
                     </div>
                     <h3 class="text-h6 font-weight-bold mb-2">訂單管理</h3>
                     <p class="text-body-2 text-grey">查看與處理所有訂單</p>
@@ -51,7 +51,7 @@
                 </v-card>
               </v-col>
 
-              <v-col cols="12" sm="6" md="4">
+              <v-col cols="12" md="4" sm="6">
                 <v-card
                   class="feature-card"
                   elevation="2"
@@ -59,7 +59,7 @@
                 >
                   <v-card-text class="text-center pa-6">
                     <div class="feature-icon-wrapper mb-4">
-                      <v-icon size="48" color="green-darken-2">mdi-chart-line</v-icon>
+                      <v-icon color="green-darken-2" size="48">mdi-chart-line</v-icon>
                     </div>
                     <h3 class="text-h6 font-weight-bold mb-2">數據統計</h3>
                     <p class="text-body-2 text-grey">查看銷售與評論數據</p>
@@ -70,26 +70,26 @@
 
             <!-- 快捷操作按鈕 -->
             <v-row class="mt-6">
-              <v-col cols="12" class="text-center">
+              <v-col class="text-center" cols="12">
                 <v-btn
-                  size="large"
-                  color="orange-darken-2"
                   class="mr-3 rounded-btn"
+                  color="orange-darken-2"
                   rounded="lg"
+                  size="large"
                   to="/admin/products"
                 >
-                  <v-icon left class="mr-2">mdi-plus-circle</v-icon>
+                  <v-icon class="mr-2" left>mdi-plus-circle</v-icon>
                   新增商品
                 </v-btn>
                 <v-btn
-                  size="large"
-                  color="blue-darken-2"
                   class="rounded-btn"
+                  color="blue-darken-2"
                   rounded="lg"
-                  variant="outlined"
+                  size="large"
                   to="/admin/orders"
+                  variant="outlined"
                 >
-                  <v-icon left class="mr-2">mdi-format-list-checks</v-icon>
+                  <v-icon class="mr-2" left>mdi-format-list-checks</v-icon>
                   查看訂單
                 </v-btn>
               </v-col>
@@ -99,11 +99,11 @@
 
         <!-- 提示資訊 -->
         <v-alert
+          border="start"
+          border-color="orange-darken-2"
           class="mt-6"
           color="blue-grey-lighten-5"
           variant="tonal"
-          border="start"
-          border-color="orange-darken-2"
         >
           <template #prepend>
             <v-icon color="orange-darken-2">mdi-information</v-icon>

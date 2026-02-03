@@ -23,7 +23,7 @@ declare module 'vue-router/auto-routes' {
     '/admin/order': RouteRecordInfo<'/admin/order', '/admin/order', Record<never, never>, Record<never, never>>,
     '/admin/orders': RouteRecordInfo<'/admin/orders', '/admin/orders', Record<never, never>, Record<never, never>>,
     '/admin/products': RouteRecordInfo<'/admin/products', '/admin/products', Record<never, never>, Record<never, never>>,
-    '/admin/ReviewsView': RouteRecordInfo<'/admin/ReviewsView', '/admin/ReviewsView', Record<never, never>, Record<never, never>>,
+    '/admin/reviews': RouteRecordInfo<'/admin/reviews', '/admin/reviews', Record<never, never>, Record<never, never>>,
     '/favorites': RouteRecordInfo<'/favorites', '/favorites', Record<never, never>, Record<never, never>>,
     '/login': RouteRecordInfo<'/login', '/login', Record<never, never>, Record<never, never>>,
     '/order': RouteRecordInfo<'/order', '/order', Record<never, never>, Record<never, never>>,
@@ -64,8 +64,8 @@ declare module 'vue-router/auto-routes' {
       routes: '/admin/products'
       views: never
     }
-    'src/pages/admin/ReviewsView.vue': {
-      routes: '/admin/ReviewsView'
+    'src/pages/admin/reviews.vue': {
+      routes: '/admin/reviews'
       views: never
     }
     'src/pages/favorites.vue': {
