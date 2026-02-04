@@ -11,5 +11,6 @@ router.patch('/refresh', auth.token, user.refresh)
 router.delete('/logout', auth.token, user.logout)
 router.patch('/cart', auth.token, user.cart)
 router.get('/cart', auth.token, user.getCart)
+router.patch('/avatar', auth.token, user.updateAvatar) // 👈 加這行
 
 export default router

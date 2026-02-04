@@ -51,6 +51,13 @@ const schema = new Schema(
     tokens: {
       type: [String],
     },
+    avatarSeed: {
+      // 👈 加這個欄位
+      type: Number,
+      default: 1,
+      min: [1, '頭像編號最小為 1'],
+      max: [10, '頭像編號最大為 10'],
+    },
   },
   {
     versionKey: false,

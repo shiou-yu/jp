@@ -45,6 +45,7 @@ export const login = async (req, res) => {
         role: req.user.role,
         cart: req.user.cart.length,
         token,
+        avatarSeed: req.user.avatarSeed, // 👈 加這行
       },
     })
   } catch (error) {
@@ -61,6 +62,7 @@ export const profile = (req, res) => {
       account: req.user.account,
       role: req.user.role,
       cart: req.user.cart.length,
+      avatarSeed: req.user.avatarSeed, // 👈 加這行
     },
   })
 }
@@ -173,6 +175,34 @@ export const getCart = async (req, res) => {
     console.log(error)
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       message: '伺服器錯誤',
+    })
+  }
+}
+
+// 👇 加入更新頭像的功能
+export const updateAvatar = async (req, res) => {
+  try {
+    const { avatarSeed } = req.body
+
+    if (!avatarSeed || avatarSeed < 1 || avatarSeed > 10) {
+      throw new Error('頭像編號必須在 1-10 之間')
+    }
+
+    req.user.avatarSeed = avatarSeed
+    await req.user.save()
+
+    res.status(StatusCodes.OK).json({
+      success: true,
+      message: '頭像已更新',
+      result: {
+        avatarSeed: req.user.avatarSeed,
+      },
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: error.message || '更新失敗',
     })
   }
 }

@@ -12,7 +12,7 @@
 
           <v-card-text class="pa-8">
             <p class="text-h6 text-center text-grey-darken-2 mb-8">
-              請選擇左側選單開始管理商品與訂單
+              請選擇左側選單開始管理商品與評論
             </p>
 
             <!-- 快捷功能卡片 -->
@@ -39,14 +39,14 @@
                   class="feature-card"
                   elevation="2"
                   hover
-                  to="/admin/orders"
+                  to="/admin/reviews"
                 >
                   <v-card-text class="text-center pa-6">
                     <div class="feature-icon-wrapper mb-4">
-                      <v-icon color="blue-darken-2" size="48">mdi-clipboard-list</v-icon>
+                      <v-icon color="blue-darken-2" size="48">mdi-comment-text-multiple</v-icon>
                     </div>
-                    <h3 class="text-h6 font-weight-bold mb-2">訂單管理</h3>
-                    <p class="text-body-2 text-grey">查看與處理所有訂單</p>
+                    <h3 class="text-h6 font-weight-bold mb-2">評論管理</h3>
+                    <p class="text-body-2 text-grey">審核與管理用戶評論</p>
                   </v-card-text>
                 </v-card>
               </v-col>
@@ -56,13 +56,14 @@
                   class="feature-card"
                   elevation="2"
                   hover
+                  to="/"
                 >
                   <v-card-text class="text-center pa-6">
                     <div class="feature-icon-wrapper mb-4">
-                      <v-icon color="green-darken-2" size="48">mdi-chart-line</v-icon>
+                      <v-icon color="green-darken-2" size="48">mdi-home</v-icon>
                     </div>
-                    <h3 class="text-h6 font-weight-bold mb-2">數據統計</h3>
-                    <p class="text-body-2 text-grey">查看銷售與評論數據</p>
+                    <h3 class="text-h6 font-weight-bold mb-2">回首頁</h3>
+                    <p class="text-body-2 text-grey">返回網站前台首頁</p>
                   </v-card-text>
                 </v-card>
               </v-col>
@@ -86,11 +87,11 @@
                   color="blue-darken-2"
                   rounded="lg"
                   size="large"
-                  to="/admin/orders"
+                  to="/admin/reviews"
                   variant="outlined"
                 >
-                  <v-icon class="mr-2" left>mdi-format-list-checks</v-icon>
-                  查看訂單
+                  <v-icon class="mr-2" left>mdi-comment-check</v-icon>
+                  審核評論
                 </v-btn>
               </v-col>
             </v-row>

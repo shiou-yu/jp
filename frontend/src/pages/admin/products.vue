@@ -22,12 +22,12 @@
               <v-text-field
                 v-model="search"
                 color="teal-lighten-1"
-                density="compact"
+                density="default"
                 flat
                 hide-details
                 placeholder="搜尋商品..."
                 prepend-inner-icon="mdi-magnify"
-                style="max-width: 300px;"
+                style="max-width: 400px;"
                 variant="outlined"
               />
               <v-spacer />
