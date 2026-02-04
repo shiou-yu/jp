@@ -5,7 +5,7 @@
     cycle
     height="100vh"
     hide-delimiters
-    :interval="5000"
+    :interval="2000"
     show-arrows="hover"
   >
     <v-carousel-item
@@ -14,30 +14,37 @@
       cover
       :src="slide.src"
     >
-      <!-- 深色遮罩層 -->
-      <div class="carousel-overlay"></div>
-
-      <!-- 文字覆蓋層 -->
+      <!-- 文字覆蓋層（右下角）-->
       <v-container class="carousel-content fill-height">
-        <v-row align="center" justify="center">
-          <v-col class="text-center" cols="12">
-            <h1 class="text-h2 text-white font-weight-bold mb-4" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.5)">
-              {{ slide.title }}
-            </h1>
-            <p class="text-h5 text-white mb-8" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.5)">
-              {{ slide.subtitle }}
-            </p>
-            <v-btn
-              class="px-8"
-              color="white"
-              rounded="pill"
-              size="x-large"
-              variant="flat"
-              @click="scrollToProducts"
-            >
-              <v-icon start>mdi-compass</v-icon>
-              立即探索
-            </v-btn>
+        <v-row align="end" class="pb-20 pr-1" justify="end">
+          <v-col cols="auto">
+            <!-- 雲朵卡片 -->
+            <div class="cloud-wrapper" style="margin-top: 40px;">
+              <div class="cloud-card">
+                <!-- 主標題 -->
+                <h2 class="cloud-title">
+                  {{ slide.title }}
+                </h2>
+
+                <!-- 副標題 -->
+                <p class="cloud-subtitle">
+                  {{ slide.subtitle }}
+                </p>
+
+                <!-- 按鈕 -->
+                <v-btn
+                  class="explore-btn mt-2"
+                  color="#5DADE2"
+                  rounded="pill"
+                  size="small"
+                  variant="flat"
+                  @click="scrollToProducts"
+                >
+                  <v-icon class="mr-1" size="small">mdi-compass</v-icon>
+                  立即探索
+                </v-btn>
+              </div>
+            </div>
           </v-col>
         </v-row>
       </v-container>
@@ -159,7 +166,7 @@ const slides = ref([
   {
     src: '/banner-03.jpg',
     title: '人氣必吃推薦',
-    subtitle: '台灣也能嚐到的日本味',
+    subtitle: '大家都在買的收藏名單',
   },
   {
     src: '/banner-04.png',
@@ -232,21 +239,6 @@ onMounted(fetchProducts)
   position: relative;
 }
 
-/* 深色遮罩 */
-.carousel-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.3) 0%,
-    rgba(0, 0, 0, 0.5) 100%
-  );
-  z-index: 1;
-}
-
 /* 文字內容層 */
 .carousel-content {
   position: absolute;
@@ -257,22 +249,210 @@ onMounted(fetchProducts)
   z-index: 2;
 }
 
-/* 響應式標題 */
-@media (max-width: 960px) {
-  .carousel-content .text-h2 {
-    font-size: 2rem !important;
+/* 雲朵容器 */
+.cloud-wrapper {
+  position: relative;
+  display: inline-block;
+  animation: cloudFloat 4s ease-in-out infinite;
+  bottom: -160px;
+  right: -30px;
+}
+
+/* 雲朵招牌樣式 - 長方形 */
+.cloud-card {
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(240, 248, 255, 0.92) 100%);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  padding: 20px 30px;
+  position: relative;
+  text-align: center;
+
+  /* 更長的長方形 */
+  border-radius: 45px;
+  border: 3px solid rgba(173, 216, 230, 0.6);
+  min-width: 180px;
+
+  box-shadow:
+    0 8px 32px rgba(93, 173, 226, 0.25),
+    0 0 40px rgba(173, 216, 230, 0.3),
+    inset 0 2px 8px rgba(255, 255, 255, 0.8);
+}
+
+/* 左邊的吊繩 */
+.cloud-card::before {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(180deg,
+    rgba(93, 173, 226, 0.4),
+    rgba(93, 173, 226, 0.6));
+  top: -20px;
+  left: 25%;
+  border-radius: 2px;
+}
+
+/* 右邊的吊繩 */
+.cloud-card::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(180deg,
+    rgba(93, 173, 226, 0.4),
+    rgba(93, 173, 226, 0.6));
+  top: -20px;
+  right: 25%;
+  border-radius: 2px;
+}
+
+/* 左邊吊環 */
+.cloud-wrapper::before {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: transparent;
+  border: 2px solid rgba(93, 173, 226, 0.5);
+  border-radius: 50%;
+  top: -22px;
+  left: calc(25% - 3px);
+  box-shadow: 0 2px 8px rgba(93, 173, 226, 0.3);
+}
+
+/* 右邊吊環 */
+.cloud-wrapper::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: transparent;
+  border: 2px solid rgba(93, 173, 226, 0.5);
+  border-radius: 50%;
+  top: -22px;
+  right: calc(25% - 3px);
+  box-shadow: 0 2px 8px rgba(93, 173, 226, 0.3);
+}
+
+/* 主標題樣式 */
+.cloud-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #2874A6;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  line-height: 1.2;
+  position: relative;
+  z-index: 2;
+}
+
+/* 副標題樣式 */
+.cloud-subtitle {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #5499C7;
+  letter-spacing: 0.5px;
+  line-height: 1.4;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 2;
+}
+
+/* 按鈕樣式 */
+.explore-btn {
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(93, 173, 226, 0.3);
+  position: relative;
+  z-index: 2;
+}
+
+.explore-btn :deep(.v-icon) {
+  font-size: 16px;
+}
+
+.explore-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(93, 173, 226, 0.4);
+}
+
+/* 雲朵招牌搖晃動畫 */
+@keyframes cloudFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
   }
-  .carousel-content .text-h5 {
-    font-size: 1.2rem !important;
+  25% {
+    transform: translateY(-8px) rotate(-1deg);
+  }
+  75% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+/* 響應式 */
+@media (max-width: 960px) {
+  .cloud-card {
+    padding: 20px 40px;
+    border-radius: 40px;
+    min-width: 240px;
+  }
+
+  .cloud-card::before,
+  .cloud-card::after {
+    height: 18px;
+    top: -18px;
+  }
+
+  .cloud-wrapper::before,
+  .cloud-wrapper::after {
+    width: 9px;
+    height: 9px;
+    top: -20px;
+  }
+
+  .cloud-title {
+    font-size: 1.1rem;
+  }
+
+  .cloud-subtitle {
+    font-size: 0.8rem;
   }
 }
 
 @media (max-width: 600px) {
-  .carousel-content .text-h2 {
-    font-size: 1.5rem !important;
+  .cloud-card {
+    padding: 18px 35px;
+    border-radius: 35px;
+    min-width: 200px;
   }
-  .carousel-content .text-h5 {
-    font-size: 1rem !important;
+
+  .cloud-card::before,
+  .cloud-card::after {
+    height: 15px;
+    top: -15px;
+  }
+
+  .cloud-wrapper::before,
+  .cloud-wrapper::after {
+    width: 8px;
+    height: 8px;
+    top: -17px;
+  }
+
+  .cloud-title {
+    font-size: 1rem;
+  }
+
+  .cloud-subtitle {
+    font-size: 0.75rem;
+  }
+
+  .explore-btn {
+    font-size: 0.8rem;
   }
 }
 

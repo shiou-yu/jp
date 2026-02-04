@@ -115,14 +115,6 @@
     <v-main style="padding-top: 0 !important; background-color: #FFF9F0;">
       <router-view></router-view>
     </v-main>
-
-    <v-footer class="py-6" color="white" style="border-top: 1px solid #ECEFF1;">
-      <v-container class="d-flex justify-center text-blue-grey-darken-3 font-weight-bold ga-6">
-        <v-btn color="blue-grey-darken-3" to="/" variant="text">熱門商品</v-btn>
-        <v-btn color="blue-grey-darken-3" variant="text">最新消息</v-btn>
-        <v-btn color="blue-grey-darken-3" variant="text">關於我們</v-btn>
-      </v-container>
-    </v-footer>
   </v-app>
 </template>
 
