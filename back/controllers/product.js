@@ -37,7 +37,7 @@ export const get = async (req, res) => {
   }
 }
 
-// --- 取得所有商品 (管理頁面使用) ---
+// --- 取得所有商品 (管理頁面使用) --
 export const getAll = async (req, res) => {
   try {
     const result = await Product.find()

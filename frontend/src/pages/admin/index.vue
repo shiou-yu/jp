@@ -11,7 +11,7 @@
           </div>
 
           <v-card-text class="pa-8">
-            <p class="text-h6 text-center text-grey-darken-2 mb-8">
+            <p class="text-h6 text-center text-brown-darken-2 mb-8">
               請選擇左側選單開始管理商品與評論
             </p>
 
@@ -26,10 +26,10 @@
                 >
                   <v-card-text class="text-center pa-6">
                     <div class="feature-icon-wrapper mb-4">
-                      <v-icon color="orange-darken-2" size="48">mdi-food</v-icon>
+                      <v-icon color="brown-darken-1" size="48">mdi-food</v-icon>
                     </div>
-                    <h3 class="text-h6 font-weight-bold mb-2">商品管理</h3>
-                    <p class="text-body-2 text-grey">新增、編輯、刪除商品資訊</p>
+                    <h3 class="text-h6 font-weight-bold mb-2 text-brown-darken-2">商品管理</h3>
+                    <p class="text-body-2 text-brown-lighten-1">新增、編輯、刪除商品資訊</p>
                   </v-card-text>
                 </v-card>
               </v-col>
@@ -43,10 +43,10 @@
                 >
                   <v-card-text class="text-center pa-6">
                     <div class="feature-icon-wrapper mb-4">
-                      <v-icon color="blue-darken-2" size="48">mdi-comment-text-multiple</v-icon>
+                      <v-icon color="teal-darken-1" size="48">mdi-comment-text-multiple</v-icon>
                     </div>
-                    <h3 class="text-h6 font-weight-bold mb-2">評論管理</h3>
-                    <p class="text-body-2 text-grey">審核與管理用戶評論</p>
+                    <h3 class="text-h6 font-weight-bold mb-2 text-brown-darken-2">評論管理</h3>
+                    <p class="text-body-2 text-brown-lighten-1">審核與管理用戶評論</p>
                   </v-card-text>
                 </v-card>
               </v-col>
@@ -60,10 +60,10 @@
                 >
                   <v-card-text class="text-center pa-6">
                     <div class="feature-icon-wrapper mb-4">
-                      <v-icon color="green-darken-2" size="48">mdi-home</v-icon>
+                      <v-icon color="blue-grey-darken-1" size="48">mdi-home</v-icon>
                     </div>
-                    <h3 class="text-h6 font-weight-bold mb-2">回首頁</h3>
-                    <p class="text-body-2 text-grey">返回網站前台首頁</p>
+                    <h3 class="text-h6 font-weight-bold mb-2 text-brown-darken-2">回首頁</h3>
+                    <p class="text-body-2 text-brown-lighten-1">返回網站前台首頁</p>
                   </v-card-text>
                 </v-card>
               </v-col>
@@ -74,7 +74,7 @@
               <v-col class="text-center" cols="12">
                 <v-btn
                   class="mr-3 rounded-btn"
-                  color="orange-darken-2"
+                  color="brown-darken-1"
                   rounded="lg"
                   size="large"
                   to="/admin/products"
@@ -84,7 +84,7 @@
                 </v-btn>
                 <v-btn
                   class="rounded-btn"
-                  color="blue-darken-2"
+                  color="brown-darken-1"
                   rounded="lg"
                   size="large"
                   to="/admin/reviews"
@@ -101,15 +101,15 @@
         <!-- 提示資訊 -->
         <v-alert
           border="start"
-          border-color="orange-darken-2"
+          border-color="brown-lighten-1"
           class="mt-6"
-          color="blue-grey-lighten-5"
+          color="brown-lighten-5"
           variant="tonal"
         >
           <template #prepend>
-            <v-icon color="orange-darken-2">mdi-information</v-icon>
+            <v-icon color="brown-darken-1">mdi-information</v-icon>
           </template>
-          <div class="text-body-2">
+          <div class="text-body-2 text-brown-darken-1">
             <strong>提示：</strong> 點擊左側選單或上方快捷卡片即可快速進入對應管理頁面
           </div>
         </v-alert>
@@ -121,35 +121,37 @@
 <style scoped>
 .admin-home-container {
   min-height: calc(100vh - 80px);
-  background: linear-gradient(135deg, #FFF8E1 0%, #FFE0B2 50%, #FFCCBC 100%);
+  background: #FFF9E6;
   padding: 40px 16px;
 }
 
 .welcome-card {
   border-radius: 24px !important;
   overflow: hidden;
+  background-color: #FFF9E6 !important;
 }
 
 /* 漸層標題區 */
 .welcome-header {
-  background: linear-gradient(135deg, #FF9800 0%, #F57C00 50%, #E65100 100%);
+  background: linear-gradient(135deg, #D7B896 0%, #C4956A 50%, #A0714F 100%);
   padding: 60px 32px;
   text-align: center;
-  box-shadow: 0 4px 20px rgba(255, 152, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(160, 113, 79, 0.3);
 }
 
 /* 功能卡片 */
 .feature-card {
   border-radius: 16px !important;
   transition: all 0.3s ease;
-  border: 2px solid rgba(255, 152, 0, 0.1);
+  border: 2px solid rgba(196, 149, 106, 0.15);
   height: 100%;
+  background-color: #F5E6D0 !important;
 }
 
 .feature-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
-  border-color: rgba(255, 152, 0, 0.3);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1) !important;
+  border-color: rgba(196, 149, 106, 0.4);
 }
 
 .feature-icon-wrapper {
@@ -160,7 +162,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: linear-gradient(135deg, #FFF8E1 0%, #FFE0B2 100%);
+  background: linear-gradient(135deg, #FFF9E6 0%, #F5E6C8 100%);
 }
 
 /* 圓角按鈕 */
@@ -173,7 +175,7 @@
 
 .rounded-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2) !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
 }
 
 /* 響應式調整 */

@@ -11,6 +11,7 @@
       <v-col cols="12">
         <v-data-table
           class="elevation-1 rounded-lg"
+          style="background-color: #FFFFFF; color: #3E2723; border: 1px solid #E8D5B7;"
           :filter-keys="['name', 'category', 'store', 'description', '_id', 'price', 'createdAt', 'updatedAt']"
           :headers="headers"
           hover
@@ -328,6 +329,15 @@ const submit = form.handleSubmit(async (values) => {
 </script>
 
 <style scoped>
+
+:deep(.v-data-table table) {
+  border-collapse: collapse;
+}
+
+:deep(.v-data-table td),
+:deep(.v-data-table th) {
+  border: 1px solid #E8D5B7 !important;
+}
 /* 稍微增加一些間距，讓畫面更呼吸 */
 .v-container {
   max-width: 1200px;

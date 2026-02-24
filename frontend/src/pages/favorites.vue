@@ -23,7 +23,7 @@
             @click="$router.push('/product/' + item.product._id)"
           >
             <template #prepend>
-              <v-avatar class="me-4" rounded="lg" size="100">
+              <v-avatar class="me-4" rounded="lg" size="64">
                 <v-img class="bg-grey-lighten-2" cover :src="item.product.imageUrl"></v-img>
               </v-avatar>
             </template>

@@ -14,11 +14,11 @@
             class="user-avatar"
             size="80"
           >
-            <v-img src="https://api.dicebear.com/9.x/big-ears-neutral/svg?seed=Aiden"></v-img>
+            <v-img :src="`https://api.dicebear.com/9.x/fun-emoji/svg?seed=${user.account}`"></v-img>
           </v-avatar>
         </div>
-        <h3 class="text-h6 font-weight-bold mt-3 text-white">{{ user.account }}</h3>
-        <p class="text-caption text-white opacity-90">系統管理員</p>
+        <h3 class="text-h6 font-weight-bold mt-3 text-grey-darken-3">{{ user.account }}</h3>
+        <p class="text-caption text-grey">系統管理員</p>
       </div>
 
       <v-divider class="my-4"></v-divider>
@@ -29,7 +29,7 @@
           v-for="nav in navs"
           :key="nav.to"
           class="nav-item mb-2"
-          color="orange-darken-2"
+          color="grey-darken-3"
           :prepend-icon="nav.icon"
           rounded="xl"
           :title="nav.title"
@@ -41,9 +41,10 @@
       <template #append>
         <div class="pa-4 text-center">
           <v-chip
-            color="orange-lighten-4"
+            color="grey-lighten-3"
             prepend-icon="mdi-shield-check"
             size="small"
+            text-color="grey-darken-2"
           >
             管理模式
           </v-chip>
@@ -51,7 +52,7 @@
       </template>
     </v-navigation-drawer>
 
-    <v-main style="background: linear-gradient(135deg, #FFF8E1 0%, #FFE0B2 50%, #FFCCBC 100%);">
+    <v-main style="background: #FFF9E6;">
       <router-view />
     </v-main>
   </v-app>
@@ -72,16 +73,16 @@ const navs = [
 <style scoped>
 /* 側邊欄樣式 */
 .admin-drawer {
-  border-right: 1px solid rgba(255, 152, 0, 0.1) !important;
+  border-right: 1px solid #F0E8C8 !important;
 }
 
 /* 用戶資訊卡片 */
 .user-info-card {
-  background: linear-gradient(135deg, #FF9800 0%, #F57C00 50%, #E65100 100%);
+  background: #FFF9E6;
   padding: 32px 24px;
   text-align: center;
   margin: -1px -1px 0 -1px;
-  box-shadow: 0 4px 12px rgba(255, 152, 0, 0.2);
+  border-bottom: 1px solid #F0E8C8;
 }
 
 .user-avatar-wrapper {
@@ -90,8 +91,8 @@ const navs = [
 }
 
 .user-avatar {
-  border: 4px solid white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border: 4px solid #FFFFFF;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* 導航項目樣式 */
@@ -103,15 +104,15 @@ const navs = [
 }
 
 .nav-item:hover {
-  background: rgba(255, 152, 0, 0.08) !important;
-  border-color: rgba(255, 152, 0, 0.2);
+  background: rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(0, 0, 0, 0.08);
   transform: translateX(4px);
 }
 
 .nav-item.v-list-item--active {
-  background: linear-gradient(135deg, rgba(255, 152, 0, 0.15), rgba(245, 124, 0, 0.15)) !important;
-  border-color: rgba(255, 152, 0, 0.3);
-  box-shadow: 0 2px 8px rgba(255, 152, 0, 0.2);
+  background: rgba(0, 0, 0, 0.08) !important;
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .nav-item :deep(.v-list-item__prepend) {
