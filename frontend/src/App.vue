@@ -8,6 +8,7 @@
 
     <v-app>
       <v-app-bar
+        v-if="!isAdminRoute"
         :class="['app-bar-custom', { 'scrolled': scrolled }]"
         fixed
         flat
@@ -78,6 +79,7 @@
 
       <!-- 側邊抽屜選單 -->
       <v-navigation-drawer
+        v-if="!isAdminRoute"
         v-model="drawer"
         location="right"
         temporary
@@ -124,48 +126,37 @@
       </v-main>
 
       <!-- 🍱 超商食品動畫頁尾 -->
-      <v-footer class="py-8" color="white" style="border-top: 1px solid #ECEFF1;">
+      <v-footer v-if="!isAdminRoute" class="py-8" color="white" style="border-top: 1px solid #ECEFF1;">
         <v-container>
-          <!-- 可愛的超商食品動畫 -->
           <div class="food-animation-container">
             <div class="food-items">
-              <!-- 飯糰 -->
               <div class="food-item" style="animation-delay: 0s;">
                 <span class="food-emoji">🍙</span>
               </div>
-              <!-- 便當 -->
               <div class="food-item" style="animation-delay: 0.2s;">
                 <span class="food-emoji">🍱</span>
               </div>
-              <!-- 三明治 -->
               <div class="food-item" style="animation-delay: 0.4s;">
                 <span class="food-emoji">🥪</span>
               </div>
-              <!-- 泡麵 -->
               <div class="food-item" style="animation-delay: 0.6s;">
                 <span class="food-emoji">🍜</span>
               </div>
-              <!-- 關東煮 -->
               <div class="food-item" style="animation-delay: 0.8s;">
                 <span class="food-emoji">🍢</span>
               </div>
-              <!-- 冰淇淋 -->
               <div class="food-item" style="animation-delay: 1s;">
                 <span class="food-emoji">🍦</span>
               </div>
-              <!-- 甜甜圈 -->
               <div class="food-item" style="animation-delay: 1.2s;">
                 <span class="food-emoji">🍩</span>
               </div>
-              <!-- 飲料 -->
               <div class="food-item" style="animation-delay: 1.4s;">
                 <span class="food-emoji">🧋</span>
               </div>
-              <!-- 零食 -->
               <div class="food-item" style="animation-delay: 1.6s;">
                 <span class="food-emoji">🍿</span>
               </div>
-              <!-- 麵包 -->
               <div class="food-item" style="animation-delay: 1.8s;">
                 <span class="food-emoji">🥐</span>
               </div>
@@ -182,14 +173,18 @@
 
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useSnackbar } from 'vuetify-use-dialog'
 import serviceUser from '@/services/user'
 import { useUserStore } from '@/stores/user'
 
 const router = useRouter()
+const route = useRoute()
 const user = useUserStore()
 const createSnackbar = useSnackbar()
+
+// admin 路由判斷
+const isAdminRoute = computed(() => route.path.startsWith('/admin'))
 
 // 布丁滑鼠游標
 const isMounted = ref(false)
@@ -271,7 +266,6 @@ const logout = async () => {
 }
 
 onMounted(async () => {
-  // 布丁滑鼠
   isAnimating = true
   isMounted.value = true
   window.addEventListener('mousemove', handleMouseMove, { passive: true })
@@ -279,10 +273,8 @@ onMounted(async () => {
   window.addEventListener('mouseup', handleMouseUp, { passive: true })
   update()
 
-  // 滾動監聽
   window.addEventListener('scroll', handleScroll, { passive: true })
 
-  // 如果已登入，獲取用戶資料
   if (user.isLoggedIn) {
     await user.getUser()
   }
@@ -311,12 +303,10 @@ a, button, .v-btn, i, .v-list-item {
   cursor: none !important;
 }
 
-/* 平滑過渡 */
 .transition-all {
   transition: all 0.3s ease !important;
 }
 
-/* 布丁滑鼠游標 */
 .cursor-dot {
   position: fixed;
   width: 30px;
@@ -345,7 +335,6 @@ a, button, .v-btn, i, .v-list-item {
   filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
 }
 
-/* ✨ 導覽列霧透效果 */
 .app-bar-custom {
   background: transparent !important;
   border: none !important;
@@ -353,7 +342,6 @@ a, button, .v-btn, i, .v-list-item {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* 滾動後的霧透玻璃效果 */
 .app-bar-custom.scrolled {
   background: rgba(255, 255, 255, 0.85) !important;
   backdrop-filter: blur(15px) saturate(180%);
@@ -362,7 +350,6 @@ a, button, .v-btn, i, .v-list-item {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Logo 標題 - 漸層金色 */
 .logo-title {
   font-size: 1.8rem !important;
   letter-spacing: 4px;
@@ -374,7 +361,6 @@ a, button, .v-btn, i, .v-list-item {
   filter: drop-shadow(0 2px 10px rgba(255, 215, 0, 0.3));
 }
 
-/* 滾動後改回深色 */
 .logo-title.text-grey-darken-4 {
   background: linear-gradient(135deg, #DAA520 0%, #B8860B 100%);
   -webkit-background-clip: text;
@@ -382,12 +368,10 @@ a, button, .v-btn, i, .v-list-item {
   filter: none;
 }
 
-/* 導覽列按鈕文字陰影 */
 .nav-btn:not(.scrolled) {
   text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
 }
 
-/* 移除按鈕的背景、hover、active 效果 */
 .nav-btn {
   background: none !important;
   position: relative;
@@ -409,7 +393,6 @@ a, button, .v-btn, i, .v-list-item {
   box-shadow: none !important;
 }
 
-/* 底線動畫 - 從左到右滑入 */
 .nav-btn .v-btn__content::after {
   content: '';
   position: absolute;
@@ -421,19 +404,16 @@ a, button, .v-btn, i, .v-list-item {
   transition: width 0.3s ease;
 }
 
-/* hover 時底線從左滑出 */
 .nav-btn:hover .v-btn__content::after {
   width: 100%;
 }
 
-/* active/當前頁面時底線保持 */
 .nav-btn.v-btn--active .v-btn__content::after,
 .router-link-active.nav-btn .v-btn__content::after,
 .router-link-exact-active.nav-btn .v-btn__content::after {
   width: 100%;
 }
 
-/* 移除 Vuetify 預設樣式 */
 .v-app-bar::before,
 .v-app-bar::after {
   display: none !important;
@@ -452,7 +432,6 @@ a, button, .v-btn, i, .v-list-item {
   border: none !important;
 }
 
-/* 🍱 超商食品動畫 */
 .food-animation-container {
   text-align: center;
   padding: 20px 0;
@@ -483,7 +462,6 @@ a, button, .v-btn, i, .v-list-item {
   cursor: none;
 }
 
-/* 跳躍動畫 */
 @keyframes bounce {
   0%, 100% {
     transform: translateY(0);
@@ -493,7 +471,6 @@ a, button, .v-btn, i, .v-list-item {
   }
 }
 
-/* 響應式調整 */
 @media (max-width: 600px) {
   .food-emoji {
     font-size: 36px;

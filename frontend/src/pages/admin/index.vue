@@ -5,9 +5,9 @@
         <!-- 歡迎卡片 -->
         <v-card class="welcome-card" elevation="8">
           <div class="welcome-header">
-            <v-icon color="white" size="80">mdi-shield-crown</v-icon>
-            <h1 class="text-h3 font-weight-bold text-white mt-4">管理中心</h1>
-            <p class="text-subtitle-1 text-white mt-2 opacity-90">超商美食評論後台管理系統</p>
+            <v-icon color="white" size="32">mdi-shield-crown</v-icon>
+            <h1 class="text-h5 font-weight-bold text-white mt-1">管理中心</h1>
+            <p class="text-caption text-white mt-1 opacity-90">超商美食評論後台管理系統</p>
           </div>
 
           <v-card-text class="pa-8">
@@ -98,21 +98,6 @@
           </v-card-text>
         </v-card>
 
-        <!-- 提示資訊 -->
-        <v-alert
-          border="start"
-          border-color="brown-lighten-1"
-          class="mt-6"
-          color="brown-lighten-5"
-          variant="tonal"
-        >
-          <template #prepend>
-            <v-icon color="brown-darken-1">mdi-information</v-icon>
-          </template>
-          <div class="text-body-2 text-brown-darken-1">
-            <strong>提示：</strong> 點擊左側選單或上方快捷卡片即可快速進入對應管理頁面
-          </div>
-        </v-alert>
       </v-col>
     </v-row>
   </v-container>
@@ -134,7 +119,7 @@
 /* 漸層標題區 */
 .welcome-header {
   background: linear-gradient(135deg, #D7B896 0%, #C4956A 50%, #A0714F 100%);
-  padding: 60px 32px;
+  padding: 16px 32px;
   text-align: center;
   box-shadow: 0 4px 20px rgba(160, 113, 79, 0.3);
 }
