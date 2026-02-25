@@ -2,24 +2,21 @@
   <v-container class="reviews-container" fluid>
     <v-row>
       <v-col cols="12">
-        <!-- 標題卡片 -->
+        <!-- 標題 + 篩選合併卡片 -->
         <v-card class="header-card mb-6" elevation="8">
           <div class="header-content">
-            <v-icon color="white" size="64">mdi-comment-text-multiple</v-icon>
-            <h1 class="text-h3 font-weight-bold text-white mt-4">評論管理</h1>
-            <p class="text-subtitle-1 text-white mt-2 opacity-90">管理所有用戶的商品評論</p>
+            <v-icon color="white" size="36">mdi-comment-text-multiple</v-icon>
+            <h1 class="text-h5 font-weight-bold text-white mt-2">評論管理</h1>
+            <p class="text-body-2 text-white mt-1 opacity-90">管理所有用戶的商品評論</p>
           </div>
-        </v-card>
-
-        <!-- 篩選與搜尋區 -->
-        <v-card class="filter-card mb-4" elevation="2">
-          <v-card-text class="pa-6">
+          <v-card-text class="pa-6" style="background-color: #FFF9E6;">
             <v-row align="center">
               <v-col cols="12" md="4">
                 <v-text-field
                   v-model="search"
+                  class="brown-input"
                   clearable
-                  color="orange-darken-2"
+                  color="brown-darken-1"
                   density="comfortable"
                   hide-details
                   label="搜尋評論內容"
@@ -31,8 +28,9 @@
               <v-col cols="12" md="3">
                 <v-select
                   v-model="filterRating"
+                  class="brown-input"
                   clearable
-                  color="orange-darken-2"
+                  color="brown-darken-1"
                   density="comfortable"
                   hide-details
                   :items="ratingOptions"
@@ -44,8 +42,9 @@
               <v-col cols="12" md="3">
                 <v-select
                   v-model="filterStatus"
+                  class="brown-input"
                   clearable
-                  color="orange-darken-2"
+                  color="brown-darken-1"
                   density="comfortable"
                   hide-details
                   :items="statusOptions"
@@ -57,7 +56,7 @@
               <v-col cols="12" md="2">
                 <v-btn
                   block
-                  color="orange-darken-2"
+                  color="brown-darken-1"
                   rounded="lg"
                   size="large"
                   @click="loadReviews"
@@ -76,7 +75,7 @@
             <v-card class="stat-card" elevation="2">
               <v-card-text class="text-center pa-4">
                 <v-icon color="blue" size="40">mdi-comment-text</v-icon>
-                <div class="text-h4 font-weight-bold mt-2">{{ totalReviews }}</div>
+                <div class="text-h4 font-weight-bold mt-2 text-black">{{ totalReviews }}</div>
                 <div class="text-body-2 text-grey">總評論數</div>
               </v-card-text>
             </v-card>
@@ -85,7 +84,7 @@
             <v-card class="stat-card" elevation="2">
               <v-card-text class="text-center pa-4">
                 <v-icon color="green" size="40">mdi-check-circle</v-icon>
-                <div class="text-h4 font-weight-bold mt-2">{{ approvedReviews }}</div>
+                <div class="text-h4 font-weight-bold mt-2 text-black">{{ approvedReviews }}</div>
                 <div class="text-body-2 text-grey">已審核</div>
               </v-card-text>
             </v-card>
@@ -93,8 +92,8 @@
           <v-col cols="12" md="3" sm="6">
             <v-card class="stat-card" elevation="2">
               <v-card-text class="text-center pa-4">
-                <v-icon color="orange" size="40">mdi-clock-alert</v-icon>
-                <div class="text-h4 font-weight-bold mt-2">{{ pendingReviews }}</div>
+                <v-icon color="brown-darken-1" size="40">mdi-clock-alert</v-icon>
+                <div class="text-h4 font-weight-bold mt-2 text-black">{{ pendingReviews }}</div>
                 <div class="text-body-2 text-grey">待審核</div>
               </v-card-text>
             </v-card>
@@ -103,7 +102,7 @@
             <v-card class="stat-card" elevation="2">
               <v-card-text class="text-center pa-4">
                 <v-icon color="amber" size="40">mdi-star</v-icon>
-                <div class="text-h4 font-weight-bold mt-2">{{ averageRating }}</div>
+                <div class="text-h4 font-weight-bold mt-2 text-black">{{ averageRating }}</div>
                 <div class="text-body-2 text-grey">平均評分</div>
               </v-card-text>
             </v-card>
@@ -112,9 +111,9 @@
 
         <!-- 評論列表 -->
         <v-card class="reviews-table-card" elevation="4">
-          <v-card-title class="pa-6 bg-grey-lighten-4">
-            <v-icon class="mr-2" color="orange-darken-2">mdi-format-list-bulleted</v-icon>
-            <span class="font-weight-bold">評論列表</span>
+          <v-card-title class="pa-6 table-title-bar">
+            <v-icon class="mr-2" color="white">mdi-format-list-bulleted</v-icon>
+            <span class="font-weight-bold text-white">評論列表</span>
           </v-card-title>
 
           <v-divider></v-divider>
@@ -130,7 +129,7 @@
             <template #item.user="{ item }">
               <div class="d-flex align-center">
                 <v-avatar class="mr-2" size="32">
-                  <v-img :src="`https://source.boringavatars.com/beam/120/${item.user}?colors=FF9800,F57C00,E65100,FFB74D,FFA726`"></v-img>
+                  <v-img :src="`https://api.dicebear.com/9.x/big-smile/svg?seed=${item.user}`"></v-img>
                 </v-avatar>
                 <span class="font-weight-medium">{{ item.user }}</span>
               </div>
@@ -229,7 +228,7 @@
             <template #loading>
               <div class="text-center pa-8">
                 <v-progress-circular
-                  color="orange-darken-2"
+                  color="brown-darken-1"
                   indeterminate
                   size="64"
                 ></v-progress-circular>
@@ -263,7 +262,7 @@
                 <div class="detail-label">用戶</div>
                 <div class="d-flex align-center">
                   <v-avatar class="mr-3" size="40">
-                    <v-img :src="`https://api.dicebear.com/9.x/thumbs/svg?seed=${selectedReview.user}`"></v-img>
+                    <v-img :src="`https://api.dicebear.com/9.x/big-smile/svg?seed=${selectedReview.user}`"></v-img>
                   </v-avatar>
                   <span class="text-h6">{{ selectedReview.user }}</span>
                 </div>
@@ -342,7 +341,7 @@
           </v-btn>
           <v-btn
             v-if="selectedReview.status === '待審核'"
-            color="green"
+            color="brown-darken-1"
             variant="flat"
             @click="approveReviewHandler(selectedReview)"
           >
@@ -555,7 +554,7 @@ const getStatusColor = (status) => {
   switch (status) {
   case '已審核': { return 'green'
   }
-  case '待審核': { return 'orange'
+  case '待審核': { return 'brown-darken-1'
   }
   case '已隱藏': { return 'grey'
   }
@@ -600,6 +599,7 @@ onMounted(() => {
 .reviews-container {
   padding: 32px 24px;
   min-height: 100vh;
+  background: #FFF9E6;
 }
 
 /* 標題卡片 */
@@ -609,44 +609,131 @@ onMounted(() => {
 }
 
 .header-content {
-  background: linear-gradient(135deg, #FF9800 0%, #F57C00 50%, #E65100 100%);
-  padding: 48px 32px;
+  background: linear-gradient(135deg, #D7B896 0%, #C4956A 50%, #A0714F 100%);
+  padding: 24px 32px;
   text-align: center;
-  box-shadow: 0 4px 20px rgba(255, 152, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(160, 113, 79, 0.3);
 }
 
 /* 篩選卡片 */
 .filter-card {
   border-radius: 16px !important;
-  border: 2px solid rgba(255, 152, 0, 0.1);
+  border: 2px solid rgba(196, 149, 106, 0.15);
+  background-color: #FFF9E6 !important;
+}
+
+.brown-input :deep(input),
+.brown-input :deep(.v-select__selection-text),
+.brown-input :deep(label) {
+  color: #A0714F !important;
+}
+
+.brown-input :deep(.v-field__input) {
+  color: #A0714F !important;
+}
+
+.brown-input :deep(.v-field__outline) {
+  --v-field-border-color: #C4956A !important;
+  color: #C4956A !important;
+}
+
+.brown-input :deep(.v-field--variant-outlined .v-field__outline__start),
+.brown-input :deep(.v-field--variant-outlined .v-field__outline__end),
+.brown-input :deep(.v-field--variant-outlined .v-field__outline__notch) {
+  border-color: #C4956A !important;
+}
+
+.brown-input :deep(.v-input__prepend-inner .v-icon),
+.brown-input :deep(.v-field__prepend-inner .v-icon) {
+  color: #A0714F !important;
 }
 
 /* 統計卡片 */
 .stat-card {
   border-radius: 16px !important;
   transition: all 0.3s ease;
-  border: 2px solid rgba(0, 0, 0, 0.05);
+  border: 2px solid rgba(196, 149, 106, 0.15);
+  background-color: #F5E6D0 !important;
 }
 
 .stat-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
-  border-color: rgba(255, 152, 0, 0.2);
+  border-color: rgba(196, 149, 106, 0.4);
 }
 
 /* 表格卡片 */
 .reviews-table-card {
   border-radius: 16px !important;
   overflow: hidden;
+  background-color: #ffffff !important;
+}
+
+.reviews-table :deep(.v-table) {
+  background-color: #ffffff !important;
+}
+
+.table-title-bar {
+  background: linear-gradient(135deg, #D7B896 0%, #C4956A 50%, #A0714F 100%);
 }
 
 .reviews-table :deep(.v-data-table-header) {
-  background: #F5F5F5;
+  background: #F5E6D0;
   font-weight: 600;
 }
 
+.reviews-table :deep(.v-data-table__wrapper) {
+  background: #ffffff !important;
+  overflow-x: hidden !important;
+}
+
+.reviews-table :deep(tbody tr) {
+  background: #ffffff !important;
+  color: #A0714F !important;
+}
+
+.reviews-table :deep(tbody td) {
+  color: #A0714F !important;
+  border-bottom: 1px solid rgba(196, 149, 106, 0.3) !important;
+}
+
+.reviews-table :deep(.v-data-table__th) {
+  border-bottom: 2px solid rgba(160, 113, 79, 0.5) !important;
+}
+
 .reviews-table :deep(tbody tr:hover) {
-  background: rgba(255, 152, 0, 0.05) !important;
+  background: rgba(196, 149, 106, 0.08) !important;
+}
+
+.reviews-table :deep(.v-table__wrapper) {
+  background: #ffffff !important;
+  overflow-x: hidden !important;
+}
+
+.reviews-table :deep(.v-data-table-rows-no-data),
+.reviews-table :deep(.v-data-table-rows-loading) {
+  background: #ffffff !important;
+}
+
+.reviews-table :deep(.v-data-table-footer) {
+  background: #ffffff !important;
+  color: #A0714F !important;
+}
+
+.reviews-table :deep(.v-data-table-footer .v-btn) {
+  color: #A0714F !important;
+}
+
+.reviews-table :deep(.v-data-table-footer .v-select) {
+  color: #A0714F !important;
+}
+
+.reviews-table :deep(.v-data-table-footer__items-per-page) {
+  color: #A0714F !important;
+}
+
+.reviews-table :deep(.v-data-table-footer__info) {
+  color: #A0714F !important;
 }
 
 /* 評論文字 */
@@ -667,10 +754,11 @@ onMounted(() => {
 .detail-dialog {
   border-radius: 16px !important;
   overflow: hidden;
+  background-color: #FFF9E6 !important;
 }
 
 .dialog-header {
-  background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+  background: linear-gradient(135deg, #D7B896 0%, #C4956A 50%, #A0714F 100%);
   padding: 24px;
   text-align: center;
 }
@@ -687,10 +775,10 @@ onMounted(() => {
 }
 
 .comment-detail {
-  background: #F5F5F5;
+  background: #F5E6D0;
   padding: 16px;
   border-radius: 12px;
-  border-left: 4px solid #FF9800;
+  border-left: 4px solid #C4956A;
   line-height: 1.6;
 }
 

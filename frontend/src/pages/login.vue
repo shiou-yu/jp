@@ -16,7 +16,7 @@
               <v-text-field
                 v-model="account.value.value"
                 class="mb-2 rounded-field"
-                color="orange-darken-2"
+                color="blue-darken-2"
                 counter
                 :error-messages="account.errorMessage.value"
                 hint="長度 4 ~ 20 的英數字"
@@ -30,7 +30,7 @@
               <v-text-field
                 v-model="password.value.value"
                 class="mb-4 rounded-field"
-                color="orange-darken-2"
+                color="blue-darken-2"
                 counter
                 :error-messages="password.errorMessage.value"
                 hint="長度 4 ~ 20 的英數字"
@@ -54,7 +54,7 @@
               <v-btn
                 block
                 class="font-weight-bold text-h6 rounded-btn"
-                color="orange-darken-2"
+                color="#85C1E9"
                 elevation="4"
                 :loading="form.isSubmitting.value"
                 rounded="lg"
@@ -68,10 +68,10 @@
 
             <!-- 註冊連結 -->
             <div class="text-center mt-6">
-              <span class="text-grey-darken-1">還沒有帳號？</span>
+              <span class="text-blue-grey-darken-1">還沒有帳號？</span>
               <v-btn
                 class="font-weight-bold"
-                color="orange-darken-2"
+                color="blue-darken-2"
                 to="/register"
                 variant="text"
               >
@@ -135,7 +135,7 @@ const submit = form.handleSubmit(async (values) => {
     createSnackbar({
       text: '登入成功 🎉 歡迎回來！',
       snackbarProps: {
-        color: 'green',
+        color: 'blue-darken-2',
       },
     })
     router.push('/')
@@ -155,7 +155,7 @@ const submit = form.handleSubmit(async (values) => {
 <style scoped>
 .login-container {
   min-height: calc(100vh - 80px);
-  background: linear-gradient(135deg, #FFF8E1 0%, #FFE0B2 50%, #FFCCBC 100%);
+  background: linear-gradient(135deg, #EBF5FB 0%, #D6EAF8 50%, #AED6F1 100%);
   padding: 40px 16px;
 }
 
@@ -164,31 +164,45 @@ const submit = form.handleSubmit(async (values) => {
   overflow: hidden;
   max-width: 500px;
   margin: 0 auto;
+  background-color: #ffffff !important;
 }
 
-/* 漸層標題區 */
+/* 藍色漸層標題區 */
 .login-header {
-  background: linear-gradient(135deg, #FF9800 0%, #F57C00 50%, #E65100 100%);
+  background: linear-gradient(135deg, #AED6F1 0%, #7FB3D3 50%, #5DADE2 100%);
   padding: 48px 32px;
   text-align: center;
-  box-shadow: 0 4px 20px rgba(255, 152, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(93, 173, 226, 0.25);
 }
 
 /* 圓角輸入框 */
 .rounded-field :deep(.v-field) {
   border-radius: 16px;
-  border: 2px solid rgba(255, 152, 0, 0.2);
+  border: 2px solid rgba(93, 173, 226, 0.2);
   transition: all 0.3s ease;
+  background-color: transparent !important;
+}
+
+.rounded-field :deep(.v-field__overlay) {
+  display: none !important;
+}
+
+.rounded-field :deep(.v-field__input) {
+  color: #757575 !important;
+}
+
+.rounded-field :deep(input) {
+  color: #757575 !important;
 }
 
 .rounded-field :deep(.v-field:hover) {
-  border-color: rgba(255, 152, 0, 0.4);
-  box-shadow: 0 4px 12px rgba(255, 152, 0, 0.1);
+  border-color: rgba(93, 173, 226, 0.4);
+  box-shadow: 0 4px 12px rgba(93, 173, 226, 0.1);
 }
 
 .rounded-field :deep(.v-field--focused) {
-  border-color: #FF9800;
-  box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1);
+  border-color: #5DADE2;
+  box-shadow: 0 0 0 3px rgba(93, 173, 226, 0.15);
 }
 
 /* 圓角按鈕 */
@@ -197,15 +211,22 @@ const submit = form.handleSubmit(async (values) => {
   text-transform: none;
   letter-spacing: 1px;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(93, 173, 226, 0.3);
 }
 
 .rounded-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(255, 152, 0, 0.4) !important;
+  box-shadow: 0 8px 20px rgba(93, 173, 226, 0.45) !important;
 }
 
 .rounded-btn:active {
   transform: translateY(0);
+}
+
+/* 表單區強制白底深字 */
+.login-card :deep(.v-card-text) {
+  background-color: #ffffff !important;
+  color: #37474f !important;
 }
 
 /* 響應式調整 */
