@@ -174,7 +174,7 @@ const slides = ref([
     subtitle: '不容錯過的絕品好物',
   },
   {
-    src: '/jp/banner-05.jpg',
+    src: '/banner-05.jpg',
     title: '超商美食指南',
     subtitle: '品味日本的便利生活',
   },

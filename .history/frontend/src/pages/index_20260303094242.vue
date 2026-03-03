@@ -164,17 +164,17 @@ const slides = ref([
     subtitle: '每一口都是驚喜',
   },
   {
-    src: '/jp/banner-03.jpg',
+    src: '/banner-03.jpg',
     title: '人氣必吃推薦',
     subtitle: '大家都在買的收藏名單',
   },
   {
-    src: '/jp/banner-04.png',
+    src: '/banner-04.png',
     title: '季節限定特選',
     subtitle: '不容錯過的絕品好物',
   },
   {
-    src: '/jp/banner-05.jpg',
+    src: '/banner-05.jpg',
     title: '超商美食指南',
     subtitle: '品味日本的便利生活',
   },
