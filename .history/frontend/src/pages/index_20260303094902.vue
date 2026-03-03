@@ -5,7 +5,7 @@
     cycle
     height="100vh"
     hide-delimiters
-    :interval="4000"
+    :interval="3500"
     show-arrows="hover"
   >
     <v-carousel-item
