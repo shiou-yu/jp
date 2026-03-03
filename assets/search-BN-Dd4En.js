@@ -1,1 +1,0 @@
-import{_ as r}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{o as t,c as o,w as a,d as s,A as n}from"./index-aVoDoF-j.js";const c={};function f(l,e){return t(),o(n,null,{default:a(()=>[...e[0]||(e[0]=[s("h1",null,"搜尋",-1)])]),_:1})}const i=r(c,[["render",f]]);export{i as default};
